@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UnityAuxiliaryTools</name>
+    </assembly>
+    <members>
+        <member name="M:UnityAuxiliaryTools.Promises.BaseControllablePromise.DoFinally">
+            <summary>
+            Should be called when the promise is completed.
+            </summary>
+        </member>
+        <member name="T:UnityAuxiliaryTools.Promises.IBaseControllablePromise">
+            <summary>
+            The interface to control promise completion.
+            </summary>
+        </member>
+        <member name="M:UnityAuxiliaryTools.Promises.IBaseControllablePromise.Fail(System.Exception)">
+            <summary>
+            Mark promise as failed.
+            </summary>
+            <param name="error">The exception, that is a reason of a failing</param>
+        </member>
+        <member name="T:UnityAuxiliaryTools.Promises.IBasePromise">
+            <summary>
+            This is a base result independent callbacks for promises.
+            </summary>
+        </member>
+        <member name="M:UnityAuxiliaryTools.Promises.IBasePromise.OnFail(System.Action{System.Exception})">
+            <summary>
+            Callback will be executed in the Unity thread after the promise will fail.
+            </summary>
+            <param name="callback">A callback to execute</param>
+        </member>
+        <member name="M:UnityAuxiliaryTools.Promises.IBasePromise.Finally(System.Action)">
+            <summary>
+            Callback will be executed in the Unity thread after the promise will success of fail.
+            </summary>
+            <param name="callback">A callback to execute</param>
+        </member>
+        <member name="M:UnityAuxiliaryTools.Promises.IControllablePromise.Success">
+            <summary>
+            Mark promise as succeed.
+            </summary>
+        </member>
+        <member name="M:UnityAuxiliaryTools.Promises.IControllablePromise`1.Success(`0)">
+            <summary>
+            Mark promise as succeed.
+            </summary>
+        </member>
+        <member name="T:UnityAuxiliaryTools.Promises.IPromise`1">
+            <summary>
+            An async operation with ability to proceed the result. PAY ATTENTION: promises callbacks will be executed in the Unity thread.
+            </summary>
+            <typeparam name="T">The type of the result</typeparam>
+        </member>
+        <member name="M:UnityAuxiliaryTools.Promises.IPromise`1.OnSuccess(System.Action{`0})">
+            <summary>
+            Callback will be executed in the Unity thread after the promise will success.
+            </summary>
+            <param name="callback">A callback to execute</param>
+        </member>
+        <member name="T:UnityAuxiliaryTools.Promises.IPromise">
+            <summary>
+            An async operation with ability to proceed the result. PAY ATTENTION: promises callbacks will be executed in the Unity thread.
+            </summary>
+        </member>
+        <member name="M:UnityAuxiliaryTools.Promises.IPromise.OnSuccess(System.Action)">
+            <summary>
+            Callback will be executed in the Unity thread after the promise will success.
+            </summary>
+            <param name="callback">A callback to execute</param>
+        </member>
+    </members>
+</doc>
