@@ -34,11 +34,20 @@ namespace CCG.MVVM.Hand
             void OnCardPlayed()
             {
                 card.Played -= OnCardPlayed;
+                card.Destroyed -= OnCardDestroyed;
                 _boardViewModel.Play(card);
                 _cards.Remove(card);
                 UpdateCardsPositions();
             }
+            void OnCardDestroyed()
+            {
+                card.Played -= OnCardPlayed;
+                card.Destroyed -= OnCardDestroyed;
+                _cards.Remove(card);
+                UpdateCardsPositions();
+            }
             card.Played += OnCardPlayed;
+            card.Destroyed += OnCardDestroyed;
             UpdateCardsPositions();
         }
 

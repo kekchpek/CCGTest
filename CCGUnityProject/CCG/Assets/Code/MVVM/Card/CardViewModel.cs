@@ -40,9 +40,14 @@ namespace CCG.MVVM.Card
         public int Health
         {
             get => _health;
-            set => SetAndRaiseIfChanged(nameof(Health), value, ref _health);
+            set
+            {
+                SetAndRaiseIfChanged(nameof(Health), value, ref _health);
+                if (_health < 1)
+                    Destroy();
+            }
         }
-        
+
         public int Attack
         {
             get => _attack;
@@ -86,6 +91,7 @@ namespace CCG.MVVM.Card
         }
 
         public event Action Played;
+        public event Action Destroyed;
 
         public CardViewModel(IInputController inputController)
         {
@@ -138,12 +144,18 @@ namespace CCG.MVVM.Card
             {
                 _isPlayed = true;
                 Played?.Invoke();
+                Destroy();
             }
             else
             {
                 Position = _positionInHand;
                 Rotation = _rotationInHand;
             }
+        }
+
+        private void Destroy()
+        {
+            Destroyed?.Invoke();
         }
     }
 }

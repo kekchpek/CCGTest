@@ -27,6 +27,7 @@ namespace CCG.MVVM.Card
         bool IsOverBoard { get; }
 
         event Action Played;
+        event Action Destroyed;
 
         void OnMouseClickDown();
 

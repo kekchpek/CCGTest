@@ -29,6 +29,8 @@ namespace CCG.MVVM.Card
         protected override void OnViewModelSet()
         {
             base.OnViewModelSet();
+
+            ViewModel.Destroyed += OnModelDestroyed;
             
             SubscribeForPropertyChange<int>("Health", SetHealth);
             SetHealth(ViewModel.Health);
@@ -175,6 +177,12 @@ namespace CCG.MVVM.Card
         public void OnPointerDown(PointerEventData eventData)
         {
             ViewModel.OnMouseClickDown();
+        }
+
+        private void OnModelDestroyed()
+        {
+            ViewModel.Destroyed -= OnModelDestroyed;
+            Destroy(gameObject);
         }
     }
 }
