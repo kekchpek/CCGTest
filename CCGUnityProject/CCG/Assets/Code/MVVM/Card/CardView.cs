@@ -1,5 +1,5 @@
-﻿using System;
-using CCG.Core.MVVM;
+﻿using CCG.Core.MVVM;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,6 +13,17 @@ namespace CCG.MVVM.Card
 
         [SerializeField] private float _moveSpeed;
         [SerializeField] private float _rotationSpeed;
+        [SerializeField] private float _changeStatAnimationTime;
+
+        private Tween _attackTween;
+        private int _attack;
+        private Tween _healthTween;
+        private int _health;
+        private Tween _manaTween;
+        private int _mana;
+
+        private Tween _positionTween;
+        private Tween _rotationTween;
         
         [SerializeField] private TextMeshProUGUI _descriptionText;
         [SerializeField] private TextMeshProUGUI _titleText;
@@ -33,13 +44,13 @@ namespace CCG.MVVM.Card
             ViewModel.Destroyed += OnModelDestroyed;
             
             SubscribeForPropertyChange<int>("Health", SetHealth);
-            SetHealth(ViewModel.Health);
+            SetHealthWithoutAnimation(ViewModel.Health);
             
             SubscribeForPropertyChange<int>("Mana", SetMana);
-            SetMana(ViewModel.Mana);
+            SetManaWithoutAnimation(ViewModel.Mana);
             
             SubscribeForPropertyChange<int>("Attack", SetAttack);
-            SetAttack(ViewModel.Attack);
+            SetAttackWithoutAnimation(ViewModel.Attack);
             
             SubscribeForPropertyChange<string>("Description", SetDescription);
             SetDescription(ViewModel.Description);
@@ -55,63 +66,72 @@ namespace CCG.MVVM.Card
             
             SubscribeForPropertyChange<bool>("IsOverBoard", SetIsOverBoard);
             SetIsSelected(ViewModel.IsOverBoard);
+            
+            SubscribeForPropertyChange<float>("Rotation", SetRotation);
+            SetRotation(ViewModel.Rotation);
+            
+            SubscribeForPropertyChange<Vector2>("Position", SetPosition);
+            SetPositionWithoutAnimation(ViewModel.Position);
         }
 
-        private void Update()
+        private void SetPosition(Vector2 position)
         {
-            ChangePosition(Time.deltaTime); 
-            ChangeRotation(Time.deltaTime);
+            _positionTween?.Kill();
+            _positionTween = transform.DOMove(ViewModel.Position,
+                ((Vector3)position - transform.position).magnitude / _moveSpeed);
         }
 
-        private void ChangePosition(float deltaTime)
+        private void SetPositionWithoutAnimation(Vector2 position)
         {
-            var cachedTransform = transform;
-            var position = cachedTransform.position;
-            var goal = new Vector3(ViewModel.Position.x, ViewModel.Position.y, 0f);
-            var direction = 
-                (goal - position).normalized;
-            var delta = direction * (_moveSpeed * deltaTime);
-            if ((position - goal).magnitude < delta.magnitude)
-            {
-                cachedTransform.position = goal;
-            }
-            else
-            {
-                cachedTransform.position = position + delta;
-            }
+            transform.position = position;
         }
 
-        private void ChangeRotation(float deltaTime)
+        private void SetRotationWithoutAnimation(float rotation)
         {
-            var cachedTransform = transform;
-            var rotation = cachedTransform.eulerAngles.z;
-            if (rotation > 180f)
-                rotation -= 360f;
-            var speedSign = Mathf.Sign(ViewModel.Rotation - rotation);
-            var delta = _rotationSpeed * speedSign * deltaTime;
-            if (Math.Abs(rotation - ViewModel.Rotation) < Mathf.Abs(delta))
-            {
-                cachedTransform.eulerAngles = new Vector3(0f, 0f, ViewModel.Rotation);
-            }
-            else
-            {
-                cachedTransform.eulerAngles = new Vector3(0f, 0f, rotation + delta);
-            }
+            transform.eulerAngles = new Vector3(0f, 0f, rotation);
+        }
+
+        private void SetRotation(float rotation)
+        {
+            _rotationTween?.Kill();
+            _rotationTween = transform.DORotate(new Vector3(0f, 0f, ViewModel.Rotation),
+                Mathf.Abs(transform.rotation.z - ViewModel.Rotation) / _rotationSpeed);
         }
 
         private void SetHealth(int health)
         {
-            _healthText.text = health.ToString();
+            _healthTween?.Kill();
+            _healthTween = DOTween.To(() => _health, SetHealthWithoutAnimation, ViewModel.Health, _changeStatAnimationTime);
+        }
+
+        private void SetHealthWithoutAnimation(int mana)
+        {
+            _health = mana;
+            _healthText.text = _health.ToString();
         }
 
         private void SetAttack(int attack)
         {
-            _attackText.text = attack.ToString();
+            _attackTween?.Kill();
+            _attackTween = DOTween.To(() => _attack, SetAttackWithoutAnimation, ViewModel.Attack, _changeStatAnimationTime);
+        }
+
+        private void SetAttackWithoutAnimation(int attack)
+        {
+            _attack = attack;
+            _attackText.text = _attack.ToString();
         }
 
         private void SetMana(int mana)
         {
-            _manaText.text = mana.ToString();
+            _manaTween?.Kill();
+            _manaTween = DOTween.To(() => _mana, SetManaWithoutAnimation, ViewModel.Health, _changeStatAnimationTime);
+        }
+
+        private void SetManaWithoutAnimation(int mana)
+        {
+            _mana = mana;
+            _manaText.text = _mana.ToString();
         }
 
         private void SetDescription(string description)
@@ -182,6 +202,11 @@ namespace CCG.MVVM.Card
         private void OnModelDestroyed()
         {
             ViewModel.Destroyed -= OnModelDestroyed;
+            _attackTween.Kill();
+            _healthTween.Kill();
+            _manaTween.Kill();
+            _positionTween.Kill();
+            _rotationTween.Kill();
             Destroy(gameObject);
         }
     }

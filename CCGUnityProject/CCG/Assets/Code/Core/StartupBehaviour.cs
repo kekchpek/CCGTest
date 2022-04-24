@@ -57,7 +57,7 @@ namespace CCG.Core
                         2*(i+1),
                         i+1, 
                         i+1,
-                        $"bla vla fierf oa fere grgrgtu nvirnir ksnmkr ring nvweorif fin {i+1}",
+                        $"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla {i+1}",
                         $"{i+1} CARD",
                         _imageModel.GetImage(imageIds[i])));
                 }
