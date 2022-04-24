@@ -1,9 +1,10 @@
 ﻿using CCG.Core.CameraService;
 using CCG.Core.Input;
-using CCG.Core.Models.ImageModel;
+using CCG.Models.ImageModel;
+using CCG.MVVM.Board;
+using CCG.MVVM.Card;
+using CCG.MVVM.Hand;
 using CCG.Services.ImageLoaderService;
-using CCG.Views.Card;
-using CCG.Views.Hand;
 using UnityAuxiliaryTools.Promises.Factory;
 using UnityAuxiliaryTools.UnityExecutor;
 using UnityEngine;
@@ -30,6 +31,8 @@ namespace CCG.Core
             Container.Bind<ICardFactory>().To<CardFactory>().AsSingle();
 
             Container.Bind<IHandModel>().To<HandModel>().AsSingle();
+            
+            Container.Bind<IBoardViewModel>().To<BoardViewModel>().AsSingle();
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using CCG.Views.Card;
+﻿using CCG.MVVM.Card;
 
-namespace CCG.Views.Hand
+namespace CCG.MVVM.Hand
 {
     public interface IHandModel
     {

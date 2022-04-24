@@ -1,13 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CCG.Views.Card;
+using CCG.Core.Input;
+using CCG.MVVM.Board;
+using CCG.MVVM.Card;
 using UnityEngine;
 
-namespace CCG.Views.Hand
+namespace CCG.MVVM.Hand
 {
     public class HandModel : IHandModel
     {
-        
+        private readonly IInputController _inputController;
+        private readonly IBoardViewModel _boardViewModel;
+
         private const int HandMaxCardsCount = 10;
         private const float HndArcMaxAngle = 120;
         private const float HandArcWidth = 100 * HandMaxCardsCount * Config.Config.CardScale;
@@ -16,8 +20,11 @@ namespace CCG.Views.Hand
 
         private readonly IList<ICardViewModel> _cards = new List<ICardViewModel>();
 
-        public HandModel()
+        public HandModel(IInputController inputController,
+            IBoardViewModel boardViewModel)
         {
+            _inputController = inputController;
+            _boardViewModel = boardViewModel;
             _screenWidth = Screen.width;
         }
         
@@ -27,6 +34,7 @@ namespace CCG.Views.Hand
             void OnCardPlayed()
             {
                 card.Played -= OnCardPlayed;
+                _boardViewModel.Play(card);
                 _cards.Remove(card);
                 UpdateCardsPositions();
             }
@@ -51,7 +59,7 @@ namespace CCG.Views.Hand
             {
                 var y = 141 * Config.Config.CardScale * Mathf.Cos(rotation * Mathf.PI / 180f);
                 var x = screenCenter - HandArcWidth / 2f * Mathf.Sin(rotation * Mathf.PI / 180f);
-                card.SetPositionAndRotationInHand(new Vector2(x, y), rotation);
+                card.SetPositionAndRotationInHand(_inputController.ScreenPointToWorld(new Vector2(x, y)), rotation);
                 rotation += rotationStep;
             }
         }

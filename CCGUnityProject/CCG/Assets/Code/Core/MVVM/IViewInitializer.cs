@@ -1,4 +1,4 @@
-﻿namespace CCG.Core.MVVM.ViewFactory
+﻿namespace CCG.Core.MVVM
 {
     public interface IViewInitializer<in T> where T : IViewModel
     {

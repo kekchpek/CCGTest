@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CCG.Core.Models.ImageModel;
+using CCG.Models.ImageModel;
 using CCG.Services.ImageLoaderService;
 using CCG.Tests.Auxiliary;
 using NSubstitute;

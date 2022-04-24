@@ -1,9 +1,9 @@
 ﻿using CCG.Core.Input;
-using CCG.Core.MVVM.ViewFactory;
+using CCG.Core.MVVM;
 using UnityEngine;
 using Zenject;
 
-namespace CCG.Views.Card
+namespace CCG.MVVM.Card
 {
     public class CardFactory : ICardFactory
     {

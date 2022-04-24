@@ -1,9 +1,8 @@
-﻿
-using System;
+﻿using System;
 using CCG.Core.MVVM;
 using UnityEngine;
 
-namespace CCG.Views.Card
+namespace CCG.MVVM.Card
 {
     public interface ICardViewModel : IViewModel
     {
@@ -24,6 +23,8 @@ namespace CCG.Views.Card
         Texture2D Icon { get; set; }
         
         bool IsSelected { get; }
+        
+        bool IsOverBoard { get; }
 
         event Action Played;
 

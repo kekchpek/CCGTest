@@ -1,7 +1,7 @@
 ﻿using UnityAuxiliaryTools.Promises;
 using UnityEngine;
 
-namespace CCG.Core.Models.ImageModel
+namespace CCG.Models.ImageModel
 {
     public interface IImageModel
     {

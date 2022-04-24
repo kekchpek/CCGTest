@@ -7,7 +7,7 @@ using UnityAuxiliaryTools.Promises.Factory;
 using UnityEditor;
 using UnityEngine;
 
-namespace CCG.Core.Models.ImageModel
+namespace CCG.Models.ImageModel
 {
     public class ImageModel : IImageModel
     {

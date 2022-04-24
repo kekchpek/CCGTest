@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace CCG.Views.Card
+namespace CCG.MVVM.Card
 {
     [RequireComponent(typeof(RectTransform))]
     public class CardView : ViewBehaviour<ICardViewModel>, IPointerDownHandler, ICardView
@@ -20,6 +20,11 @@ namespace CCG.Views.Card
         [SerializeField] private TextMeshProUGUI _healthText;
         [SerializeField] private TextMeshProUGUI _manaText;
         [SerializeField] private RawImage _icon;
+        [SerializeField] private GameObject _selectedParticles;
+        [SerializeField] private GameObject _overBoardParticles;
+
+        private bool _isSelected;
+        private bool _isOverBoard;
         
         protected override void OnViewModelSet()
         {
@@ -42,6 +47,12 @@ namespace CCG.Views.Card
             
             SubscribeForPropertyChange<Texture2D>("Icon", SetIcon);
             SetIcon(ViewModel.Icon);
+            
+            SubscribeForPropertyChange<bool>("IsSelected", SetIsSelected);
+            SetIsSelected(ViewModel.IsSelected);
+            
+            SubscribeForPropertyChange<bool>("IsOverBoard", SetIsOverBoard);
+            SetIsSelected(ViewModel.IsOverBoard);
         }
 
         private void Update()
@@ -57,7 +68,7 @@ namespace CCG.Views.Card
             var goal = new Vector3(ViewModel.Position.x, ViewModel.Position.y, 0f);
             var direction = 
                 (goal - position).normalized;
-            var delta = direction * _moveSpeed * deltaTime;
+            var delta = direction * (_moveSpeed * deltaTime);
             if ((position - goal).magnitude < delta.magnitude)
             {
                 cachedTransform.position = goal;
@@ -114,6 +125,41 @@ namespace CCG.Views.Card
         private void SetIcon(Texture2D icon)
         {
             _icon.texture = icon;
+        }
+
+        private void SetIsSelected(bool isSelected)
+        {
+            _isSelected = isSelected;
+            UpdateParticles();
+        }
+
+        private void SetIsOverBoard(bool isOverBoard)
+        {
+            _isOverBoard = isOverBoard;
+            UpdateParticles();
+        }
+
+
+        private void UpdateParticles()
+        {
+            if (!_isSelected)
+            {
+                _selectedParticles.SetActive(false);
+                _overBoardParticles.SetActive(false);
+            }
+            else
+            {
+                if (_isOverBoard)
+                {
+                    _selectedParticles.SetActive(false);
+                    _overBoardParticles.SetActive(true);
+                }
+                else
+                {
+                    _selectedParticles.SetActive(true);
+                    _overBoardParticles.SetActive(false);
+                }
+            }
         }
         
         public void OnEnterToBoard()

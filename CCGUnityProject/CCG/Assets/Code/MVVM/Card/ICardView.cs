@@ -1,4 +1,4 @@
-﻿namespace CCG.Views.Card
+﻿namespace CCG.MVVM.Card
 {
     public interface ICardView
     {

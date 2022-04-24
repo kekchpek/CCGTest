@@ -1,10 +1,10 @@
-﻿using System;
-using CCG.Core.MVVM;
-using CCG.Views.Card;
+﻿using CCG.Core.MVVM;
+using CCG.MVVM.Card;
 using UnityEngine;
 
-namespace CCG.Views.Board
+namespace CCG.MVVM.Board
 {
+    [RequireComponent(typeof(BoxCollider2D))]
     public class BoardView : ViewBehaviour<IViewModel>
     {
         private void OnTriggerEnter2D(Collider2D other)

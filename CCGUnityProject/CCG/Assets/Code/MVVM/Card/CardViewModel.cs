@@ -4,7 +4,7 @@ using CCG.Core.MVVM;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
-namespace CCG.Views.Card
+namespace CCG.MVVM.Card
 {
     public class CardViewModel : ViewModel, ICardViewModel
     {
@@ -19,10 +19,11 @@ namespace CCG.Views.Card
         private Texture2D _icon;
         private bool _isSelected;
         private float _rotation;
-
-        private bool _overBoard;
+        private bool _isOverBoard;
+        
         private Vector2 _positionInHand;
         private float _rotationInHand;
+        private bool _isPlayed;
 
         public Vector2 Position
         {
@@ -74,10 +75,16 @@ namespace CCG.Views.Card
 
         public bool IsSelected
         {
-            get => _icon;
+            get => _isSelected;
             set => SetAndRaiseIfChanged(nameof(IsSelected), value, ref _isSelected);
         }
-        
+
+        public bool IsOverBoard
+        {
+            get => _isOverBoard;
+            set => SetAndRaiseIfChanged(nameof(IsOverBoard), value, ref _isOverBoard);
+        }
+
         public event Action Played;
 
         public CardViewModel(IInputController inputController)
@@ -87,6 +94,8 @@ namespace CCG.Views.Card
 
         public void OnMouseClickDown()
         {
+            if (_isPlayed)
+                return;
             _inputController.MousePositionChanged += OnMousePositionChanged;
             _inputController.MouseUp += MouseUp;
             IsSelected = true;
@@ -96,12 +105,12 @@ namespace CCG.Views.Card
 
         public void OnCardEnterBoard()
         {
-            _overBoard = true;
+            IsOverBoard = true;
         }
 
         public void OnCardExitBoard()
         {
-            _overBoard = false;
+            IsOverBoard = false;
         }
 
         public void SetPositionAndRotationInHand(Vector2 position, float rotation)
@@ -125,8 +134,9 @@ namespace CCG.Views.Card
             _inputController.MousePositionChanged -= OnMousePositionChanged;
             _inputController.MouseUp -= MouseUp;
             IsSelected = false;
-            if (_overBoard)
+            if (_isOverBoard)
             {
+                _isPlayed = true;
                 Played?.Invoke();
             }
             else
