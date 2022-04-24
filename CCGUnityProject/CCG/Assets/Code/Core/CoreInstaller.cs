@@ -4,6 +4,7 @@ using CCG.Models.ImageModel;
 using CCG.MVVM.Board;
 using CCG.MVVM.Card;
 using CCG.MVVM.Hand;
+using CCG.MVVM.HandController;
 using CCG.MVVM.StatsChanger;
 using CCG.Services.ImageLoaderService;
 using UnityAuxiliaryTools.Promises.Factory;
@@ -35,7 +36,10 @@ namespace CCG.Core
             
             Container.Bind<IBoardViewModel>().To<BoardViewModel>().AsSingle();
             
-            Container.Bind<IStatsChanger>().To<StatsChanger>().AsSingle();
+            Container.Bind<IStatsChanger>().To<StatsChanger>().AsSingle()
+                .OnInstantiated<StatsChanger>((_, o) => o.Initialize());
+            
+            Container.Bind<IHandControllerViewModel>().To<HandControllerViewModel>().AsSingle();
         }
     }
 }

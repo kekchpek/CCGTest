@@ -1,6 +1,7 @@
 ﻿using CCG.Core.MVVM;
 using CCG.MVVM.Card;
 using CCG.MVVM.Hand;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace CCG.MVVM.StatsChanger
@@ -16,6 +17,20 @@ namespace CCG.MVVM.StatsChanger
             _handModel = handModel;
         }
 
+        public void Initialize()
+        {
+            _handModel.SomeCardRemoved += OnSomeCardRemoved;
+        }
+
+        private void OnSomeCardRemoved(int cardIndex, ICardViewModel _)
+        {
+            if (_changingCardIndex >= cardIndex)
+            {
+                _changingCardIndex--;
+                _changingCardIndex = Mathf.Max(_changingCardIndex, 0);
+            }
+        }
+
         public void ChangeCardStat()
         {
             var cards = _handModel.GetCards();
@@ -24,6 +39,7 @@ namespace CCG.MVVM.StatsChanger
             if (cards.Length - 1 < _changingCardIndex)
                 _changingCardIndex = 0;
             ChangeCardRandomStat(cards[_changingCardIndex]);
+            _changingCardIndex++;
         }
 
         private void ChangeCardRandomStat(ICardViewModel card)

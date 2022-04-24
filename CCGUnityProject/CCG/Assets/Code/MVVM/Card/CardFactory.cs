@@ -36,6 +36,7 @@ namespace CCG.MVVM.Card
             var viewPrefab = Resources.Load<GameObject>(ViewPath);
             var gameObject = _instantiator.InstantiatePrefab(viewPrefab, _mainCanvas);
             gameObject.transform.localScale = Vector3.one * Config.Config.CardScale;
+            gameObject.transform.SetAsFirstSibling();
             gameObject.GetComponent<IViewInitializer<ICardViewModel>>()
                 .SetViewModel(card);
             return card;

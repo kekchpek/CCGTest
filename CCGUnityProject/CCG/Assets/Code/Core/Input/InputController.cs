@@ -16,6 +16,7 @@ namespace CCG.Core.Input
         
         
         public Vector2 MousePosition => UnityEngine.Input.mousePosition * _screenScale + _bottomLeftScreenPoint;
+        public float ScreenWidth => Screen.width;
 
         public void SetCamera(Camera mainCamera)
         {

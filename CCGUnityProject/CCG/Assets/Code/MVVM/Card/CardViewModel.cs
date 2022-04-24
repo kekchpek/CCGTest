@@ -153,7 +153,7 @@ namespace CCG.MVVM.Card
             }
         }
 
-        private void Destroy()
+        public void Destroy()
         {
             Destroyed?.Invoke();
         }

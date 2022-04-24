@@ -35,6 +35,8 @@ namespace CCG.MVVM.Card
 
         void OnCardExitBoard();
 
+        void Destroy();
+        
         void SetPositionAndRotationInHand(Vector2 position, float rotation);
 
     }
