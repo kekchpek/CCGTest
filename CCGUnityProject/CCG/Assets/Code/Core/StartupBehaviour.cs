@@ -48,6 +48,7 @@ namespace CCG.Core
         
         private void Start()
         {
+            // not good way of initialization, but had no time to make normal factories or initializers
             ((IViewInitializer<IBoardViewModel>)_boardView).SetViewModel(_boardViewModel);
             ((IViewInitializer<IHandControllerViewModel>)_handControllerView).SetViewModel(_handControllerViewModel);
             ((IViewInitializer<IStatsChangerViewModel>)_statsChangerView).SetViewModel(_statsChangerViewModel);
@@ -75,6 +76,7 @@ namespace CCG.Core
             }).OnFail(e =>
             {
                 Debug.LogError(e.Message);
+                // perpetual retrying
                 InitBoard();
             });
         }
