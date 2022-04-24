@@ -4,7 +4,6 @@ using System.Linq;
 using CCG.Services.ImageLoaderService;
 using UnityAuxiliaryTools.Promises;
 using UnityAuxiliaryTools.Promises.Factory;
-using UnityEditor;
 using UnityEngine;
 
 namespace CCG.Models.ImageModel
@@ -56,7 +55,7 @@ namespace CCG.Models.ImageModel
 
         private void AddImage(Texture2D image)
         {
-            _images.Add(GUID.Generate().ToString(), image);
+            _images.Add(Guid.NewGuid().ToString(), image);
         }
 
         private void CheckIsInitialized()
