@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CCG.Core.Config;
 using CCG.Core.Models.ImageModel;
 using CCG.Services.ImageLoaderService;
 using CCG.Tests.Auxiliary;
@@ -38,7 +37,7 @@ namespace CCG.Tests.Models
             imageModel.Initialize();
             
             // Assert
-            imageLoaderService.Received(Quantity.Exactly(Config.IMAGE_INIT_BUFFER)).LoadRandomImage();
+            imageLoaderService.Received(Quantity.Exactly(Config.Config.ImageInitBuffer)).LoadRandomImage();
         }
         
         [Test]
@@ -68,8 +67,8 @@ namespace CCG.Tests.Models
             var initPromiseSub = Substitute.For<IControllablePromise>();
             promisesFactory.CreatePromise().Returns(initPromiseSub);
             
-            var loadPromises = new PromiseStub<Texture2D>[Config.IMAGE_INIT_BUFFER];
-            for (var i = 0; i < Config.IMAGE_INIT_BUFFER; i++)
+            var loadPromises = new PromiseStub<Texture2D>[Config.Config.ImageInitBuffer];
+            for (var i = 0; i < Config.Config.ImageInitBuffer; i++)
             {
                 loadPromises[i] = new PromiseStub<Texture2D>();
             }
@@ -98,8 +97,8 @@ namespace CCG.Tests.Models
             var initPromiseSub = Substitute.For<IControllablePromise>();
             promisesFactory.CreatePromise().Returns(initPromiseSub);
             
-            var loadPromises = new PromiseStub<Texture2D>[Config.IMAGE_INIT_BUFFER];
-            for (var i = 0; i < Config.IMAGE_INIT_BUFFER; i++)
+            var loadPromises = new PromiseStub<Texture2D>[Config.Config.ImageInitBuffer];
+            for (var i = 0; i < Config.Config.ImageInitBuffer; i++)
             {
                 loadPromises[i] = new PromiseStub<Texture2D>();
             }
@@ -127,8 +126,8 @@ namespace CCG.Tests.Models
             var initPromiseSub = Substitute.For<IControllablePromise>();
             promisesFactory.CreatePromise().Returns(initPromiseSub);
             
-            var loadPromises = new PromiseStub<Texture2D>[Config.IMAGE_INIT_BUFFER];
-            for (var i = 0; i < Config.IMAGE_INIT_BUFFER; i++)
+            var loadPromises = new PromiseStub<Texture2D>[Config.Config.ImageInitBuffer];
+            for (var i = 0; i < Config.Config.ImageInitBuffer; i++)
             {
                 loadPromises[i] = new PromiseStub<Texture2D>();
             }
@@ -154,8 +153,8 @@ namespace CCG.Tests.Models
             var initPromiseSub = Substitute.For<IControllablePromise>();
             promisesFactory.CreatePromise().Returns(initPromiseSub);
             
-            var loadPromises = new PromiseStub<Texture2D>[Config.IMAGE_INIT_BUFFER];
-            for (var i = 0; i < Config.IMAGE_INIT_BUFFER; i++)
+            var loadPromises = new PromiseStub<Texture2D>[Config.Config.ImageInitBuffer];
+            for (var i = 0; i < Config.Config.ImageInitBuffer; i++)
             {
                 loadPromises[i] = new PromiseStub<Texture2D>();
             }
@@ -185,8 +184,8 @@ namespace CCG.Tests.Models
             var initPromiseSub = Substitute.For<IControllablePromise>();
             promisesFactory.CreatePromise().Returns(initPromiseSub);
             
-            var loadPromises = new PromiseStub<Texture2D>[Config.IMAGE_INIT_BUFFER];
-            for (var i = 0; i < Config.IMAGE_INIT_BUFFER; i++)
+            var loadPromises = new PromiseStub<Texture2D>[Config.Config.ImageInitBuffer];
+            for (var i = 0; i < Config.Config.ImageInitBuffer; i++)
             {
                 loadPromises[i] = new PromiseStub<Texture2D>();
             }
@@ -202,7 +201,7 @@ namespace CCG.Tests.Models
             var ids = imageModel.GetAllImageIds();
             
             // Assert
-            Assert.AreEqual(Config.IMAGE_INIT_BUFFER, ids.Length);
+            Assert.AreEqual(Config.Config.ImageInitBuffer, ids.Length);
         }
         
         
@@ -217,8 +216,8 @@ namespace CCG.Tests.Models
             var initPromiseSub = Substitute.For<IControllablePromise>();
             promisesFactory.CreatePromise().Returns(initPromiseSub);
             
-            var loadPromises = new PromiseStub<Texture2D>[Config.IMAGE_INIT_BUFFER];
-            for (var i = 0; i < Config.IMAGE_INIT_BUFFER; i++)
+            var loadPromises = new PromiseStub<Texture2D>[Config.Config.ImageInitBuffer];
+            for (var i = 0; i < Config.Config.ImageInitBuffer; i++)
             {
                 loadPromises[i] = new PromiseStub<Texture2D>();
             }

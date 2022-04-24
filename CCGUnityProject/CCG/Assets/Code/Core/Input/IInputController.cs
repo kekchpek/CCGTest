@@ -1,7 +1,14 @@
-﻿namespace CCG.Core.Input
+﻿using System;
+using UnityEngine;
+
+namespace CCG.Core.Input
 {
     public interface IInputController
     {
-        void Initialize();
+        event Action MouseUp;
+
+        Vector2 MousePosition { get; }
+
+        event Action<Vector2> MousePositionChanged;
     }
 }
