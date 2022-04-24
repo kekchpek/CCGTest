@@ -6,13 +6,13 @@ using Random = UnityEngine.Random;
 
 namespace CCG.MVVM.StatsChanger
 {
-    public class StatsChanger : ViewModel, IStatsChanger
+    public class StatsChangerViewModel : ViewModel, IStatsChangerViewModel
     {
         private readonly IHandModel _handModel;
 
         private int _changingCardIndex;
 
-        public StatsChanger(IHandModel handModel)
+        public StatsChangerViewModel(IHandModel handModel)
         {
             _handModel = handModel;
         }

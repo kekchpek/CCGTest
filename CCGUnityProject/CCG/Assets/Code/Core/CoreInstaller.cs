@@ -36,8 +36,8 @@ namespace CCG.Core
             
             Container.Bind<IBoardViewModel>().To<BoardViewModel>().AsSingle();
             
-            Container.Bind<IStatsChanger>().To<StatsChanger>().AsSingle()
-                .OnInstantiated<StatsChanger>((_, o) => o.Initialize());
+            Container.Bind<IStatsChangerViewModel>().To<StatsChangerViewModel>().AsSingle()
+                .OnInstantiated<StatsChangerViewModel>((_, o) => o.Initialize());
             
             Container.Bind<IHandControllerViewModel>().To<HandControllerViewModel>().AsSingle();
         }

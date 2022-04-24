@@ -13,7 +13,7 @@ namespace CCG.MVVM.Hand
         private readonly IInputController _inputController;
         private readonly IBoardViewModel _boardViewModel;
 
-        private const int HandMaxCardsCount = 10;
+        private const int HandMaxCardsCount = Config.Config.MaxCardsInHand;
         private const float HndArcMaxAngle = 120;
         private const float HandArcWidth = 100 * HandMaxCardsCount * Config.Config.CardScale;
 

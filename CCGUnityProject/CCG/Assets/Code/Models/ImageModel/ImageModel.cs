@@ -61,6 +61,7 @@ namespace CCG.Models.ImageModel
 
         private void CheckIsInitialized()
         {
+            Debug.Log(_pendingImagesCount);
             if (--_pendingImagesCount == 0)
             {
                 _initPromise.Success();
@@ -70,6 +71,7 @@ namespace CCG.Models.ImageModel
         private void FailInitialization(Exception e)
         {
             _pendingImagesCount = default;
+            _images.Clear();
             _initPromise.Fail(new InvalidOperationException("Initialization failed!", e));
         }
     }

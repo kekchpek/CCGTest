@@ -18,7 +18,7 @@ namespace CCG.Core
         private IHandModel _handModel;
         private IInputController _inputController;
         private IBoardViewModel _boardViewModel;
-        private IStatsChanger _statsChanger;
+        private IStatsChangerViewModel _statsChangerViewModel;
         private IHandControllerViewModel _handControllerViewModel;
 
         [SerializeField] private Camera _mainCamera;
@@ -34,7 +34,7 @@ namespace CCG.Core
             IHandModel handModel,
             IInputController inputController,
             IBoardViewModel boardViewModel,
-            IStatsChanger statsChanger,
+            IStatsChangerViewModel statsChangerViewModel,
             IHandControllerViewModel handControllerViewModel)
         {
             _cardFactory = cardFactory;
@@ -42,7 +42,7 @@ namespace CCG.Core
             _handModel = handModel;
             _inputController = inputController;
             _boardViewModel = boardViewModel;
-            _statsChanger = statsChanger;
+            _statsChangerViewModel = statsChangerViewModel;
             _handControllerViewModel = handControllerViewModel;
         }
         
@@ -50,23 +50,32 @@ namespace CCG.Core
         {
             ((IViewInitializer<IBoardViewModel>)_boardView).SetViewModel(_boardViewModel);
             ((IViewInitializer<IHandControllerViewModel>)_handControllerView).SetViewModel(_handControllerViewModel);
-            ((IViewInitializer<IStatsChanger>)_statsChangerView).SetViewModel(_statsChanger);
+            ((IViewInitializer<IStatsChangerViewModel>)_statsChangerView).SetViewModel(_statsChangerViewModel);
             _inputController.SetCamera(_mainCamera);
-            var cardsCount = Random.Range(4, 7);
+            InitBoard();
+        }
+
+        private void InitBoard()
+        {
             _imageModel.Initialize().OnSuccess(() =>
             {
+                var cardsCount = Random.Range(4, 7);
                 _loadingPanel.SetActive(false);
                 var imageIds = _imageModel.GetAllImageIds();
                 for (var i = 0; i < cardsCount; i++)
                 {
                     _handModel.AddCard(_cardFactory.CreateCard(
-                        2*(i+1),
-                        i+1, 
-                        i+1,
-                        $"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla {i+1}",
-                        $"{i+1} CARD",
+                        2 * (i + 1),
+                        i + 1,
+                        i + 1,
+                        $"bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla {i + 1}",
+                        $"{i + 1} CARD",
                         _imageModel.GetImage(imageIds[i])));
                 }
+            }).OnFail(e =>
+            {
+                Debug.LogError(e.Message);
+                InitBoard();
             });
         }
     }

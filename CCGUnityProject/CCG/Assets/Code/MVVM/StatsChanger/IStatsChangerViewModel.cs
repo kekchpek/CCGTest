@@ -2,7 +2,7 @@
 
 namespace CCG.MVVM.StatsChanger
 {
-    public interface IStatsChanger : IViewModel
+    public interface IStatsChangerViewModel : IViewModel
     {
         void ChangeCardStat();
     }

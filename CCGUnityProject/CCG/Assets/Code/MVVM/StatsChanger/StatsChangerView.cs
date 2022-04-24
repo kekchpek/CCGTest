@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace CCG.MVVM.StatsChanger
 {
-    public class StatsChangerView : ViewBehaviour<IStatsChanger>
+    public class StatsChangerView : ViewBehaviour<IStatsChangerViewModel>
     {
 
         [SerializeField] private Button _changeStatsButton;
